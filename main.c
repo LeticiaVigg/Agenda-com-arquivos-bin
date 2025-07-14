@@ -20,8 +20,8 @@ void cadastro(){
 
     char entrada[160];
 
-    FILE *arquivo = fopen("lista_completa.bin", "ab"); 
-    if(arquivo == NULL){
+    FILE *arquivo_lista_completa = fopen("lista_completa.bin", "ab"); 
+    if(arquivo_lista_completa == NULL){
         perror("Erro");
         return;
     }
@@ -67,9 +67,9 @@ void cadastro(){
     if(comprador.da_compra.dia<31 && comprador.da_compra.mes<13 && comprador.da_compra.ano<2028 &&
         comprador.da_compra.dia>0 && comprador.da_compra.mes>0 && comprador.da_compra.ano>2020){
         
-        fwrite(&comprador, sizeof comprador, 1, arquivo);
+        fwrite(&comprador, sizeof comprador, 1, arquivo_lista_completa);
     }
-    fclose(arquivo);
+    fclose(arquivo_lista_completa);
 }
 
 /*
@@ -80,8 +80,8 @@ Assegura: apresentação do cadastro da compra referente ao nome buscado;
 void consulta_por_nome(){
     struct compra comprador;
 
-    FILE *arquivo = fopen("lista_completa.bin", "rb"); //arquivo completo
-    if(arquivo == NULL){
+    FILE *arquivo_lista_completa = fopen("lista_completa.bin", "rb"); //arquivo completo
+    if(arquivo_lista_completa == NULL){
         perror("Erro");
         return;
     }
@@ -106,7 +106,7 @@ void consulta_por_nome(){
         printf("Compra não identificada");
     }
 
-    fclose(arquivo);
+    fclose(arquivo_lista_completa);
 }
 
 /*
@@ -117,8 +117,8 @@ Assegura: apresentação do cadastro da compra referente ao e-mail buscado;
 void consulta_por_email(){
     struct compra comprador;
 
-    FILE *arquivo = fopen("lista_completa.bin", "rb"); 
-    if(arquivo == NULL){
+    FILE *arquivo_lista_completa = fopen("lista_completa.bin", "rb"); 
+    if(arquivo_lista_completa == NULL){
         perror("Erro");
         return;
     }
@@ -143,7 +143,7 @@ void consulta_por_email(){
         printf("Compra não identificada");
     }
 
-    fclose(arquivo);
+    fclose(arquivo_lista_completa);
 }
 
 /*
