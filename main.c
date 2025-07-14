@@ -154,19 +154,19 @@ Assegura: apresentação da lista completa.
 void lista_completa(){
     struct compra comprador;
 
-    FILE *arquivo = fopen("lista_completa.bin", "rb"); //arquivo completo
-    if(arquivo == NULL){
+    FILE *arquivo_lista_completa = fopen("lista_completa.bin", "rb"); //arquivo completo
+    if(arquivo_lista_completa == NULL){
         perror("Erro");
         return;
     }
 
-    while(fread(&comprador, sizeof comprador, 1, arquivo) > 0){
+    while(fread(&comprador, sizeof comprador, 1, arquivo_lista_completa) > 0){
         printf("\n%s%s%s%02d/%02d/%04d\n%02d/%02d/%04d\n", comprador.nome, comprador.email,
             comprador.endereco, comprador.da_compra.dia, comprador.da_compra.mes,
             comprador.da_compra.ano, comprador.envio.dia, comprador.envio.mes, comprador.envio.ano);
     }
 
-    fclose(arquivo);
+    fclose(arquivo_lista_completa);
 }
 
 /*
@@ -188,45 +188,45 @@ void separa_lista(){
 
     struct compra comparador;
 
-    FILE *arquivo1 = fopen("lista_completa.bin", "rb"); 
-    FILE *arquivo2 = fopen("lista_enviados.bin", "wb"); 
-    FILE *arquivo3 = fopen("lista_nao_enviados.bin", "wb"); 
-    if(arquivo1 == NULL || arquivo2 == NULL || arquivo3 == NULL){
+    FILE *arquivo_completo = fopen("lista_completa.bin", "rb"); 
+    FILE *arquivo_enviados = fopen("lista_enviados.bin", "wb"); 
+    FILE *arquivo_nao_enviados = fopen("lista_nao_enviados.bin", "wb"); 
+    if(arquivo_completo == NULL || arquivo_enviados == NULL || arquivo_nao_enviados == NULL){
         perror("Erro");
         return;
     }
 
-    while(fread(&comparador, sizeof comparador, 1, arquivo1) > 0){
+    while(fread(&comparador, sizeof comparador, 1, arquivo_completo) > 0){
         if(comparador.envio.ano < ano){
-            fwrite(&comparador, sizeof comparador, 1, arquivo2);
+            fwrite(&comparador, sizeof comparador, 1, arquivo_enviados);
         }
         else if(comparador.envio.ano > ano){
-                fwrite(&comparador, sizeof comparador, 1, arquivo3);
+                fwrite(&comparador, sizeof comparador, 1, arquivo_nao_enviados);
         }
             else if(comparador.envio.ano == ano){
                 if(comparador.envio.mes < mes){
-                    fwrite(&comparador, sizeof comparador, 1, arquivo2);
+                    fwrite(&comparador, sizeof comparador, 1, arquivo_enviados);
                 }
                 else if(comparador.envio.mes > mes){
-                    fwrite(&comparador, sizeof comparador, 1, arquivo3);
+                    fwrite(&comparador, sizeof comparador, 1, arquivo_nao_enviados);
                 }
                     else if(comparador.envio.mes == mes){
                         if(comparador.envio.dia < dia){
-                            fwrite(&comparador, sizeof comparador, 1, arquivo2);
+                            fwrite(&comparador, sizeof comparador, 1, arquivo_enviados);
                         }
                         else if(comparador.envio.dia > dia){
-                            fwrite(&comparador, sizeof comparador, 1, arquivo3);
+                            fwrite(&comparador, sizeof comparador, 1, arquivo_nao_enviados);
                         }
                             else if(comparador.envio.dia == dia){
-                                fwrite(&comparador, sizeof comparador, 1, arquivo2);
+                                fwrite(&comparador, sizeof comparador, 1, arquivo_enviados);
                             }
                     }
             }
     }
 
-    fclose(arquivo1);
-    fclose(arquivo2);
-    fclose(arquivo3);
+    fclose(arquivo_completo);
+    fclose(arquivo_enviados);
+    fclose(arquivo_nao_enviados);
 }
 
 /*
@@ -237,19 +237,19 @@ Assegura: apresentação da lista de pedidos não enviados.
 void lista_nao_enviados(){
     struct compra comprador;
 
-    FILE *arquivo = fopen("lista_nao_enviados.bin", "rb"); //arquivo de lista de pedidos não enviados
-    if(arquivo == NULL){
+    FILE *arquivo_nao_enviados = fopen("lista_nao_enviados.bin", "rb"); //arquivo de lista de pedidos não enviados
+    if(arquivo_nao_enviados == NULL){
         perror("Erro");
         return;
     }
 
-    while(fread(&comprador, sizeof comprador, 1, arquivo) > 0){
+    while(fread(&comprador, sizeof comprador, 1, arquivo_nao_enviados) > 0){
         printf("\n%s%s%s%02d/%02d/%04d\n%02d/%02d/%04d\n", comprador.nome, comprador.email,
                 comprador.endereco, comprador.da_compra.dia, comprador.da_compra.mes, comprador.da_compra.ano,
                 comprador.envio.dia, comprador.envio.mes, comprador.envio.ano);
     }
 
-    fclose(arquivo);
+    fclose(arquivo_nao_enviados);
 }
 
 /*
@@ -260,19 +260,19 @@ Assegura: apresentação da lista de pedidos enviados.
 void lista_enviados(){
     struct compra comprador;
 
-    FILE *arquivo = fopen("lista_enviados.bin", "rb"); //arquivo lista de pedidos enviados
-    if(arquivo == NULL){
+    FILE *arquivo_enviados = fopen("lista_enviados.bin", "rb"); //arquivo lista de pedidos enviados
+    if(arquivo_enviados == NULL){
         perror("Erro");
         return;
     }
 
-    while(fread(&comprador, sizeof comprador, 1, arquivo) > 0){
+    while(fread(&comprador, sizeof comprador, 1, arquivo_enviados) > 0){
         printf("\n%s%s%s%02d/%02d/%04d\n%02d/%02d/%04d\n", comprador.nome, comprador.email,
                 comprador.endereco, comprador.da_compra.dia, comprador.da_compra.mes, comprador.da_compra.ano,
                 comprador.envio.dia, comprador.envio.mes, comprador.envio.ano);
     }
 
-    fclose(arquivo);
+    fclose(arquivo_enviados);
 }
 
 int main(void){
