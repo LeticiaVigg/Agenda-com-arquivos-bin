@@ -92,7 +92,7 @@ void consulta_por_nome(){
     fflush(stdin);
 
     bool achou = false;
-    while(!achou && fread(&comprador, sizeof comprador, 1, arquivo) > 0){
+    while(!achou && fread(&comprador, sizeof comprador, 1, arquivo_lista_completa) > 0){
         if(strcmp(comprador.nome, nome_procurado) == 0){
             achou = true;
         }
@@ -129,7 +129,7 @@ void consulta_por_email(){
     fflush(stdin);
 
     bool achou = false;
-    while(!achou && fread(&comprador, sizeof comprador, 1, arquivo) > 0){
+    while(!achou && fread(&comprador, sizeof comprador, 1, arquivo_lista_completa) > 0){
         if(strcmp(comprador.email, email_procurado) == 0){
             achou = true;
         }
@@ -154,7 +154,7 @@ Assegura: apresentação da lista completa.
 void lista_completa(){
     struct compra comprador;
 
-    FILE *arquivo_lista_completa = fopen("lista_completa.bin", "rb"); //arquivo completo
+    FILE *arquivo_lista_completa = fopen("lista_completa.bin", "rb");
     if(arquivo_lista_completa == NULL){
         perror("Erro");
         return;
@@ -237,7 +237,7 @@ Assegura: apresentação da lista de pedidos não enviados.
 void lista_nao_enviados(){
     struct compra comprador;
 
-    FILE *arquivo_nao_enviados = fopen("lista_nao_enviados.bin", "rb"); //arquivo de lista de pedidos não enviados
+    FILE *arquivo_nao_enviados = fopen("lista_nao_enviados.bin", "rb");
     if(arquivo_nao_enviados == NULL){
         perror("Erro");
         return;
@@ -260,7 +260,7 @@ Assegura: apresentação da lista de pedidos enviados.
 void lista_enviados(){
     struct compra comprador;
 
-    FILE *arquivo_enviados = fopen("lista_enviados.bin", "rb"); //arquivo lista de pedidos enviados
+    FILE *arquivo_enviados = fopen("lista_enviados.bin", "rb");
     if(arquivo_enviados == NULL){
         perror("Erro");
         return;
